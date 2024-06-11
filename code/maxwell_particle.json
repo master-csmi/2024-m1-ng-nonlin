@@ -4,7 +4,7 @@
     "Models":
     {
         "cfpdes":{
-            "equations":["equation1","equation2","equation3","equation4","equation5","equation6"]
+            "equations":["equation1","equation2","equation3"]
         },
         "equation1":{
             "setup":{
@@ -44,50 +44,13 @@
                     "gamma":"{-equation2_Hy,equation1_Hx}:equation2_Hy:equation1_Hx"
                 }
             }
-        },
-
-        "equation4":{
-            "setup":{
-                "unknown":{
-                    "basis":"Pch1",
-                    "name":"Hx1",
-                    "symbol":"Hx1"
-                },
-                "coefficients":{
-                    "d":"1",
-                    "gamma":"{0,equation6_Ez1}:equation6_Ez1"
-                }
-            }
-        },
-        "equation5":{
-            "setup":{
-                "unknown":{
-                    "basis":"Pch1",
-                    "name":"Hy1",
-                    "symbol":"Hy1"
-                },
-                "coefficients":{
-                    "d":"1",
-                    "gamma":"{-equation6_Ez1,0}:equation6_Ez1"
-                }
-            }
-        },
-        "equation6":{
-            "setup":{
-                "unknown":{
-                    "basis":"Pch1",
-                    "name":"Ez1",
-                    "symbol":"Ez1"
-                },
-                "coefficients":{
-                    "d":"1",
-                    "gamma":"{-equation5_Hy1,equation4_Hx1}:equation5_Hy1:equation4_Hx1"
-                }
-            }
         }
-
     },
 
+    "Parameters":{
+        "c":3e8,
+        "T":20
+    },
 
     "Meshes":
     {
@@ -96,7 +59,7 @@
             "Import":
             {
                 "filename":"$cfgdir/particle.geo",
-                "hsize":0.005
+                "hsize":0.01
             }
         }
     },
@@ -121,14 +84,13 @@
         {
             "Dirichlet":
             {
-                "mybc1":
-                {
-                    "markers":["Left","Right","Top","Bottom_1","Bottom_3"],
-                    "expr":"0"
-                },
                 "mybc2":{
-                    "markers":["Bottom_2"],
-                    "expr":"100*sin(20*t):t"
+                    "markers":["Bottom_1","Bottom_2","Bottom_3"],
+                    "expr":"100*sin(T*t):t:T"
+                },
+                "mybc3":{
+                    "markers":["Top","Right","Left"],
+                    "expr":"0"
                 }
             }
         },
@@ -137,73 +99,31 @@
         {
             "Dirichlet":
             {
-                "mybc1":{
-                    "markers":["Left","Right","Top","Bottom_1","Bottom_3"],
-                    "expr":"0"
-                },
                 "mybc2":{
-                    "markers":["Bottom_2"],
-                    "expr":"100*sin(20*t):t"
+                    "markers":["Bottom_1","Bottom_2","Bottom_3"],
+                    "expr":"100*sin(T*t):t:T"
+                },
+                "mybc3":{
+                    "markers":["Top","Right","Left"],
+                    "expr":"0"
                 }
             }
         },
 
-        "equation3":{
-            "Dirichlet":{
-                "mybc1":{
-                    "markers":["Left","Right","Top","Bottom_1","Bottom_3"],
-                    "expr":"0"
-                },
-                "mybc2":{
-                    "markers":["Bottom_2"],
-                    "expr":"100*sin(20*t):t"
-                }
-            }
-        },
-
-        "equation4":
+        "equation3":
         {
             "Dirichlet":
             {
-                "mybc1":
-                {
-                    "markers":["Left","Right","Top","Bottom_1","Bottom_3"],
-                    "expr":"0"
-                },
                 "mybc2":{
-                    "markers":["Bottom_2"],
-                    "expr":"100*sin(20*t):t"
+                    "markers":["Bottom_1","Bottom_2","Bottom_3"],
+                    "expr":"100*sin(T*t):t:T"
+                },
+                "mybc3":{
+                    "markers":["Top","Right","Left"],
+                    "expr":"0"
                 }
             }
-        },
-
-        "equation5":
-        {
-            "Dirichlet":
-            {
-                "mybc1":{
-                    "markers":["Left","Right","Top","Bottom_1","Bottom_3"],
-                    "expr":"0"
-                },
-                "mybc2":{
-                    "markers":["Bottom_2"],
-                    "expr":"100*sin(20*t):t"
-                }
-            }
-        },
-
-        "equation6":{
-            "Dirichlet":{
-                "mybc1":{
-                    "markers":["Left","Right","Top","Bottom_1","Bottom_3"],
-                    "expr":"0"
-                },
-                "mybc2":{
-                    "markers":["Bottom_2"],
-                    "expr":"100*sin(20*t):t"
-                }
-            }
-        }
+        }        
     },
 
     "InitialConditions":
@@ -239,39 +159,6 @@
                     }
                 }
             }
-        },
-
-        "equation4":{
-            "Hx1":{
-                "Expression":{
-                    "myic1":{
-                        "markers":["Screen","Particle"],
-                        "expr":"0"
-                    }
-                }
-            }
-        },
-
-        "equation5":{
-            "Hy1":{
-                "Expression":{
-                    "myic1":{
-                        "markers":["Screen","Particle"],
-                        "expr":"0"
-                    }
-                }
-            }
-        },
-
-        "equation6":{
-            "Ez1":{
-                "Expression":{
-                    "myic1":{
-                        "markers":["Screen","Particle"],
-                        "expr":"0"
-                    }
-                }
-            }
         }
     },
 
@@ -282,6 +169,46 @@
             "Exports":
             {
                 "fields":["all"]
+            },
+            "Measures":{
+                "Points":{
+                    "capteur_sortie":{
+                        "over_geometry":{
+                            "segment":{
+                                "point1":"{-0.8,1.5,0}",
+                                "point2":"{0.8,1.5,0}",
+                                "n_points":100
+                            }
+                        },
+                        "fields":"cfpdes",
+                        "include_coordinates":1,
+                        "expressions":{
+                            "L2s":"equation1_Hx*equation1_Hx+equation3_Ez*equation3_Ez:equation1_Hx:equation2_Hy:equation3_Ez"
+                        },
+                        "output":{
+                            "type":"table",
+                            "name":"sortie"
+                        }
+                    },
+                    "capteur_entree":{
+                        "over_geometry":{
+                            "segment":{
+                                "point1":"{-0.8,0.1,0}",
+                                "point2":"{0.8,0.1,0}",
+                                "n_points":100
+                            }
+                        },
+                        "fields":"cfpdes",
+                        "include_coordinates":1,
+                        "expressions":{
+                            "L2e":"equation1_Hx*equation1_Hx+equation3_Ez*equation3_Ez:equation1_Hx:equation2_Hy:equation3_Ez"
+                        },
+                        "output":{
+                            "type":"table",
+                            "name":"entree"
+                        }
+                    }
+                }
             }
         }
     }
