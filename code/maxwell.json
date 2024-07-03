@@ -64,7 +64,7 @@
         {
             "Import":
             {
-                "filename":"$cfgdir/geo/particle.geo",
+                "filename":"$cfgdir/geo/particleabso.geo",
                 "hsize":0.01
             }
         }
@@ -77,9 +77,84 @@
             "epsilon":"1.77",
             "mu":"1"
         },
-        "mymat2":{
-            "markers":"Particle",
-            "epsilon":"2.5281",
+        "mymat3":{
+            "markers":"layer1",
+            "epsilon":"1.83",
+            "mu":"1"
+        },
+        "mymat4":{
+            "markers":"layer2",
+            "epsilon":"1.89",
+            "mu":"1"
+        },
+        "mymat5":{
+            "markers":"layer3",
+            "epsilon":"1.95",
+            "mu":"1"
+        },
+        "mymat6":{
+            "markers":"layer4",
+            "epsilon":"2.01",
+            "mu":"1"
+        },
+        "mymat7":{
+            "markers":"layer5",
+            "epsilon":"2.07",
+            "mu":"1"
+        },
+        "mymat8":{
+            "markers":"layer6",
+            "epsilon":"2.13",
+            "mu":"1"
+        },
+        "mymat9":{
+            "markers":"layer7",
+            "epsilon":"2.25",
+            "mu":"1"
+        },
+        "mymat10":{
+            "markers":"layer8",
+            "epsilon":"2.50",
+            "mu":"1"
+        },
+        "mymat11":{
+            "markers":"layer9",
+            "epsilon":"3",
+            "mu":"1"
+        },
+        "mymat12":{
+            "markers":"layer10",
+            "epsilon":"4",
+            "mu":"1"
+        },
+        "mymat13":{
+            "markers":"layer11",
+            "epsilon":"6",
+            "mu":"1"
+        },
+        "mymat14":{
+            "markers":"layer12",
+            "epsilon":"10",
+            "mu":"1"
+        },
+        "mymat15":{
+            "markers":"layer13",
+            "epsilon":"14",
+            "mu":"1"
+        },
+        "mymat16":{
+            "markers":"layer14",
+            "epsilon":"18",
+            "mu":"1"
+        },
+        "mymat17":{
+            "markers":"layer15",
+            "epsilon":"22",
+            "mu":"1"
+        },
+        "mymat18":{
+            "markers":"layer16",
+            "epsilon":"24",
             "mu":"1"
         }
     },
@@ -91,11 +166,11 @@
             "Dirichlet":
             {
                 "mybc2":{
-                    "markers":["Bottom_2","Bottom_1","Bottom_3"],
+                    "markers":["emetteur"],
                     "expr":"100*sin(a*t):t:a"
                 },
                 "mybc3":{
-                    "markers":["Top","Right","Left"],
+                    "markers":["Bottom","Top","Right","Left"],
                     "expr":"0"
                 }
             }
@@ -106,11 +181,11 @@
             "Dirichlet":
             {
                 "mybc2":{
-                    "markers":["Bottom_2","Bottom_1","Bottom_3"],
+                    "markers":["emetteur"],
                     "expr":"100*sin(a*t):t:a"
                 },
                 "mybc3":{
-                    "markers":["Top","Right","Left"],
+                    "markers":["Bottom","Top","Right","Left"],
                     "expr":"0"
                 }
             }
@@ -121,11 +196,11 @@
             "Dirichlet":
             {
                 "mybc2":{
-                    "markers":["Bottom_2","Bottom_1","Bottom_3"],
+                    "markers":["emetteur"],
                     "expr":"100*sin(a*t):t:a"
                 },
                 "mybc3":{
-                    "markers":["Top","Right","Left"],
+                    "markers":["Bottom","Top","Right","Left"],
                     "expr":"0"
                 }
             }
@@ -138,7 +213,7 @@
             "Hx":{
                 "Expression":{
                     "myic1":{
-                        "markers":["Screen","Particle"],
+                        "markers":["Screen","layer1","layer2","layer3","layer4","layer5"],
                         "expr":"0"
                     }
                 }
@@ -149,7 +224,7 @@
             "Hy":{
                 "Expression":{
                     "myic1":{
-                        "markers":["Screen","Particle"],
+                        "markers":["Screen","layer1","layer2","layer3","layer4","layer5"],
                         "expr":"0"
                     }
                 }
@@ -160,7 +235,7 @@
             "Ez":{
                 "Expression":{
                     "myic1":{
-                        "markers":["Screen","Particle"],
+                        "markers":["Screen","layer1","layer2","layer3","layer4","layer5"],
                         "expr":"0"
                     }
                 }
